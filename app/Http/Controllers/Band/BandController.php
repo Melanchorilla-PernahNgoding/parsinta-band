@@ -94,4 +94,13 @@ class BandController extends Controller
 
     }
 
+
+    public function destroy(Band $band)
+    {
+        Storage::delete($band->thumbnail);
+        $band->genres()->detach();
+        $band->delete();
+    }
+
+
 }
