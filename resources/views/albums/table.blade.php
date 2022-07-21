@@ -1,6 +1,11 @@
 @extends('layouts.backend', ['title' => $title])
 
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <div class="card">
         <div class="card-header">{{ $title }}</div>
         <div class="card-body">
@@ -19,7 +24,8 @@
                             <td>{{ $album->name }}</td>
                             <td>{{ $album->band->name }}</td>
                             <td>
-                                <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                                <a href="{{ route('albums.edit', $album) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <div endpoint="{{ route('albums.delete', $album) }}" class="delete d-inline"></div>
                             </td>
                         </tr>
                     @endforeach

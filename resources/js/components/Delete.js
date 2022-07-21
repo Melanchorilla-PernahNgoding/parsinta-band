@@ -22,7 +22,7 @@ function Delete(props) {
     }
 
     return (
-        <button onClick={destroy} className="btn btn-danger">
+        <button onClick={destroy} className="btn btn-danger btn-sm">
             Delete
         </button>
     );
