@@ -9,7 +9,6 @@
 
 
 @section('content')
-@include('alert')
     <div class="card">
         <div class="card-header">New Band</div>
         <div class="card-body">

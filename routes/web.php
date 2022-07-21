@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\{HomeController, DashboardController};
-use App\Http\Controllers\Band\{BandController, AlbumController};
+use App\Http\Controllers\Band\{BandController, AlbumController, GenreController};
 use Illuminate\Support\Facades\{Route, Auth};
 
 /*
@@ -48,5 +48,22 @@ Route::middleware('auth')->group(function() {
         Route::delete('{album:slug}/delete', [AlbumController::class, 'destroy'])->name('albums.delete');
 
     });
+
+
+    Route::prefix('genres')->group(function() {
+        Route::get('create', [GenreController::class, 'create'])->name('genres.create');
+        Route::post('create', [GenreController::class, 'store']);
+
+
+        Route::get('table', [GenreController::class, 'table'])->name('genres.table');
+
+        Route::get('{genre:slug}/edit', [GenreController::class, 'edit'])->name('genres.edit');
+        Route::put('{genre:slug}/edit', [GenreController::class, 'update']);
+
+
+        Route::delete('{genre:slug}/delete', [GenreController::class, 'destroy'])->name('genres.delete');
+
+    });
+
 
 });
