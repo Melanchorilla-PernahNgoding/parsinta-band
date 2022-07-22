@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\{HomeController, DashboardController};
-use App\Http\Controllers\Band\{BandController, AlbumController, GenreController};
+use App\Http\Controllers\Band\{BandController, AlbumController, GenreController, LyricController};
 use Illuminate\Support\Facades\{Route, Auth};
 
 /*
@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function() {
 
         Route::delete('{album:slug}/delete', [AlbumController::class, 'destroy'])->name('albums.delete');
 
+        Route::get('/get-album-by-{band}', [AlbumController::class, 'getAlbumsByBandId']);
+
     });
 
 
@@ -63,6 +65,18 @@ Route::middleware('auth')->group(function() {
 
         Route::delete('{genre:slug}/delete', [GenreController::class, 'destroy'])->name('genres.delete');
 
+    });
+
+    Route::prefix('lyrics')->group(function() {
+        Route::get('create', [LyricController::class, 'create'])->name('lyrics.create');
+        Route::post('create', [LyricController::class, 'store']);
+
+        Route::get('table', [LyricController::class, 'table'])->name('lyrics.table');
+
+        Route::get('{lyric:slug}/edit', [LyricController::class, 'edit'])->name('lyrics.edit');
+        Route::put('{lyric:slug}/edit', [LyricController::class, 'update']);
+
+        Route::delete('{lyric:slug}/delete', [LyricController::class, 'destroy'])->name('lyrics.delete');
     });
 
 

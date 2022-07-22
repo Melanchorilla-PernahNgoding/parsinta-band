@@ -13,6 +13,11 @@ class BandController extends Controller
     
     public function table()
     {
+        if(request()->expectsJson()){
+            return Band::latest()->get(['id', 'name']);
+        }
+
+
         return view('bands.table', [
             'bands' => Band::latest()->paginate(16)
         ]);

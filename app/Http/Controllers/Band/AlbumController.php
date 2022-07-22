@@ -70,6 +70,11 @@ class AlbumController extends Controller
 
     }
 
+    public function getAlbumsByBandId(Band $band)
+    {
+        return $band->albums;
+    }
+
     public function destroy(Album $album)
     {
         $album->delete();
