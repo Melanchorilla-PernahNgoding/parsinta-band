@@ -15,8 +15,14 @@ class Lyric extends Model
         return $this->belongsTo(Album::class);
     }
 
-    public function bands()
+    // public function bands()
+    // {
+    //     return $this->hasMany(Band::class);
+    // }
+
+    public function band()
     {
-        return $this->hasMany(Band::class);
+        return $this->belongsTo(Band::class);
     }
+
 }
