@@ -11,6 +11,7 @@ function Create(props) {
     const [albumId, setAlbumId] = useState('');
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
+    const [errors, setErrors] = useState([]);
 
     const request = {
         band: bandId,
@@ -36,8 +37,13 @@ function Create(props) {
         try {
             let response = await axios.post(props.endpoint, request);
             setMessage(response.data.message);
-        } catch (error) {
-            console.log(e.message);
+            setErrors([]);
+            setAlbumId('');
+            setBandId('');
+            setTitle('');
+            setBody('');
+        } catch (e) {
+            setErrors(e.response.data.errors);
         }
     }
 
@@ -54,7 +60,7 @@ function Create(props) {
                     <form onSubmit={store}>
                         <div className="form-group">
                             <label htmlFor="band">Band</label>
-                            <select onChange={getAlbumBySelectedBand} name="band" id="band" className="form-control">
+                            <select value={bandId} onChange={getAlbumBySelectedBand} name="band" id="band" className="form-control">
                                 <option value={null}>Choose a band</option>
                                 {
                                     bands.map((band) => {
@@ -62,12 +68,13 @@ function Create(props) {
                                     })
                                 }
                             </select>
+                            { errors.band ? <div className='text text-danger'>{errors.band[0]}</div>: '' }
                         </div>
                         {
                             albums.length ? 
                             <div className="form-group">
                                 <label htmlFor="album">Album</label>
-                                <select onChange={(e) => setAlbumId(e.target.value)} name="album" id="album" className="form-control">
+                                <select value={albumId} onChange={(e) => setAlbumId(e.target.value)} name="album" id="album" className="form-control">
                                     <option value={null}>Choose a album</option>
                                     {
                                         albums.map((album) => {
@@ -75,18 +82,24 @@ function Create(props) {
                                         })
                                     }
                                 </select>
+                                { errors.album ? <div className='text text-danger'>{errors.album[0]}</div>: '' }
+
                             </div> : ''
                         }
 
                         <div className="form-group">
                             <label htmlFor="title">Title</label>
                             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} name="title" id="title" className="form-control" />
+                            { errors.title ? <div className='text text-danger'>{errors.title[0]}</div>: '' }
                         </div>
+
 
                         <div className="form-group">
                             <label htmlFor="body">Lyric</label>
                             <textarea rows="10" value={body} onChange={(e) => setBody(e.target.value)} name="body" id="body" className="form-control" />
+                            { errors.body ? <div className='text text-danger'>{errors.body[0]}</div>: '' }
                         </div>
+
 
                         <button type="submit" className="btn btn-primary">Create</button>
                     </form>
